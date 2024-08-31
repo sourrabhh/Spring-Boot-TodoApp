@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #444;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            transition: transform 0.3s;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            background-color: #f9f9fb;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        li:hover {
+            background-color: #e6e6f7;
+        }
+
+        li div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        li span {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        li span:first-child {
+            font-weight: 600;
+            color: #333;
+        }
+
+        form {
+            margin: 0;
+            padding: 0;
+            display: inline-block;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            width: 100%;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 6px;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            li {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            button, .delete-button {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <ul>
+            <li th:each="todo : ${todos}">
+                <div>
+                    <span th:text="${todo.title}">Sample Title</span> 
+                    <span th:text="${todo.description}">Sample Description</span>
+                </div>
+                <form th:action="@{'/delete/' + ${todo.id}}" method="post">
+                    <button type="submit" class="delete-button">Delete</button>
+                </form>
+            </li>
+        </ul>
+        <form th:action="@{/create}" method="post">
+            <input type="text" name="title" placeholder="Title" required>
+            <input type="text" name="description" placeholder="Description" required>
+            <button type="submit">Add To-Do</button>
+        </form>
+    </div>
+</body>
+</html>
