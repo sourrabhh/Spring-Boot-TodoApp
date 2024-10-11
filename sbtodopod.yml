@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sbtodoapppod
+  labels:
+    app: sbtodoapp
+spec:
+   containers:
+   - name: sbtodoappcontainer
+     image: sourabh2411/sbtodoapp
+     ports:
+      - containerPort: 8080
+...
