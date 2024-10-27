@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: sbtodogreendeployment
+spec: 
+  replicas: 2
+  strategy: 
+    type: RollingUpdate
+  selector: 
+    matchLabels: 
+      version: v2
+      color: green
+  template:
+    metadata: 
+      name: sbtodoapppod 
+      labels:
+        version: v2
+        color: green
+    spec: 
+      containers:
+        - name: sbtodoappcontainer
+          image: sourabh2411/sbtodoapp
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+...
